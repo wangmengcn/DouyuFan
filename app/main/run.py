@@ -13,4 +13,4 @@ def chatmsg():
 	return render_template('rocket.html')
 
 if __name__ == '__main__':
-    app.run(debug=True,port=4000)
+    app.run(debug=True,host='0.0.0.0',port=4000)
