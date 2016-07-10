@@ -37,6 +37,8 @@ def convertData(data):
 
 
 
+
+
 @socketio.on('chat msg')
 def getmsg(message):
     print('received msg:' + str(message))
