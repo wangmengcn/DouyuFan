@@ -50,7 +50,7 @@ def getmsg(message):
         content = result['content']
         chat = sender + " said: " + content
         print chat 
-        emit('broad cast', chat)
+        socketio.emit('broad cast', chat)
 
 
 @socketio.on('connect')
