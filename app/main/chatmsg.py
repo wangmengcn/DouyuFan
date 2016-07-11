@@ -14,31 +14,21 @@ redis = redis.StrictRedis(host='123.206.211.77',
                           port='6379', db=0, password='abc@123')
 broadcast = redis.pubsub()
 broadcast.subscribe('rocketinfo')
-# broadcast.run_in_thread(sleep_time=0.001)
 
-
-def info():
-    broadcast = redis.pubsub()
-    broadcast.subscribe('rocketinfo')
-    for message in broadcast.listen():
-        if message:
-            socketio.emit('chat msg', str(message))
-            print message
 
 
 def convertData(data):
-	if data:
-		try:
-			result = eval(data)
-			print type(result)
-			print result
-		except Exception, e:
-			raise e
+    if data:
+        try:
+            result = eval(data)
+            print type(result)
+            print result
+        except Exception, e:
+            raise e
 
+# ＝＝＝＝＝＝＝关于最新弹幕信息的触发和广播＝＝＝＝＝＝＝ #
 
-
-
-
+# 客户端触发'chat msg'事件之后，向'broad cast'发送消息，从而触发广播事件
 @socketio.on('chat msg')
 def getmsg(message):
     print('received msg:' + str(message))
@@ -51,23 +41,25 @@ def getmsg(message):
         sender = result['sender_id']
         content = result['content']
         chat = sender + " said: " + content
-        print chat 
+        print chat
         socketio.emit('broad cast', chat)
 
 
+# 在客户端建立建立连接之后，通过触发此方法进行不同的操作，例如向'broad cast'时间发送消息
 @socketio.on('connect')
 def clientconnected():
     socketio.emit('broad cast', "msg")
-    # info()
     print 'connected'
 
-
+# 通过'broad cast'向已经建立简介的客户端广播消息
 @socketio.on('broad cast')
 def castinfo(data):
     emit('broad cast', data, broadcast=True)
 
 
 
+# ＝＝＝＝＝＝＝关于最新火箭信息的触发和广播＝＝＝＝＝＝＝ #
+
 
 if __name__ == '__main__':
-    socketio.run(app,host='0.0.0.0', port=3000)
+    socketio.run(app, host='0.0.0.0', port=3000)
