@@ -1,0 +1,73 @@
+{%extends "base.html"%}
+{%block head%}
+	{{super()}}
+    <link rel="stylesheet" type="text/css" href="../static/css/hotroom.css">
+    <meta http-equiv="Access-Control-Allow-Origin">
+{%endblock%}
+{%block title%}Hottest Room{%endblock%}
+{%block content%}
+<div class="container-fluid">
+    <!--在此动态增加最热房间-->
+    <div class="container">
+        <h2>热门房间</h2>
+        {%if hotroom%}
+            {%for room in hotroom%}
+                {%if flag%3==0 %}
+                <div class="row">
+                {%endif%}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src={{room['img']}} alt="http://www.douyu.com/{{room['roomid']}}">
+                        <div class="caption">
+                            <h4>{{room['roomtitle']}}</h4>
+                            <p>
+                                <a href="http://www.douyu.com/{{room['roomid']}}">
+                                    {{room['anchor']}}@{{room['tag']}}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {%set flag=flag+1%}
+                {%if flag%3==0 %}
+                </div>
+                {%endif%}
+            {%endfor%}
+        {%endif%}
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" id="divchat">
+                <ul class="list-group" id="messages"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://123.206.211.77:' + 3000);
+    var counter = 1;
+    socket.on('connect', function() {
+    	    var timer = setInterval(function(){
+	    	socket.emit('chat msg','');
+	    },1000);
+    });
+</script>
+<script type="text/javascript" charset="utf-8">
+    socket.on('connect', function() {
+        socket.on('broad cast', function(msg){
+            if (counter%10==0){
+                $('#messages').empty();
+            }
+            $('#messages').append('<li class="list-group-item">'+msg+'</li>');
+            counter+=1;
+          });
+    });
+    socket.on('connect', function() {
+        socket.on('rocket cast', function(msg){
+          });
+    });
+</script>
+{%endblock%}
