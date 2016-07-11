@@ -13,7 +13,7 @@ socketio = SocketIO(app)
 redis = redis.StrictRedis(host='123.206.211.77',
                           port='6379', db=0, password='abc@123')
 broadcast = redis.pubsub()
-broadcast.subscribe('rocketinfo')
+broadcast.subscribe('chatinfo')
 
 
 
