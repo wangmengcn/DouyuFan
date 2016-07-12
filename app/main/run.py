@@ -13,7 +13,7 @@ def index():
 @app.route('/chatmsg')
 def chatmsg():
     rooms = HotRoom()
-    return render_template('gift.html', hotroom=rooms,flag =0)
+    return render_template('gift.html', hotroom=rooms, flag=0)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=4000)
