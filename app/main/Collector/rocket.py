@@ -46,15 +46,16 @@ def get_rocket(data):
         rocketmsg["recver_room"] = recver_room
         rocketmsg["gift"] = gift
         rocketmsg["date"] = datetime.now()
-        publishvalue = {}
-        publishvalue["sender_id"] = sender_id
-        publishvalue["recver_id"] = recver_id
-        publishvalue["recver_room"] = recver_room
-        publishvalue["gift"] = gift
         col.insert_one(rocketmsg, bypass_document_validation=False)
-        castRocket(publishvalue)
-        print sender_id, "送给房间号为:", recver_room, "的", recver_id, "一个",\
-            gift, "<", datetime.now(), ">"
+        if gift == "火箭":
+            publishvalue = {}
+            publishvalue["sender_id"] = sender_id
+            publishvalue["recver_id"] = recver_id
+            publishvalue["recver_room"] = recver_room
+            publishvalue["gift"] = gift
+            castRocket(publishvalue)
+            print sender_id, "送给房间号为:", recver_room, "的", recver_id, "一个",\
+                gift, "<", datetime.now(), ">"
     except Exception, e:
         print "error occur:", repr(data)
     finally:
