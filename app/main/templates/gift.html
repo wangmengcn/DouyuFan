@@ -49,7 +49,7 @@
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
-    var socket = io.connect('http://123.206.211.77:' + 3000);
+    var socket = io.connect('http://localhost:' + 3000);
     var counter = 1;
     var rcounter = 0;
     var rocketrow = 0;
@@ -84,12 +84,16 @@
                     $('#rockets').append("<h2>鱼丸礼物</h2><br>");
                 }
                 var rowid = "rocketrow" +parseInt(rcounter/3);
+                var colid = "room" + rcounter;
                 if(rcounter%3==0){
                     $('#rockets').append("<div class='row' id="+ rowid +"/>")
                 }
-                $('#'+rowid).append("<div class='col-sm-6 col-md-4'><div class='thumbnail'><img src='"+ msg['img'] +"'"+ "alt='http://www.douyu.com/"+ msg['roomid'] +"'"+">"+
+                $('#'+rowid).append("<div class='col-sm-6 col-md-4' id="+colid+ "><div class='thumbnail'><img src='"+ msg['img'] +"'"+ "alt='http://www.douyu.com/"+ msg['roomid'] +"'"+">"+
                     "<div class='caption'><h4>"+msg['roomtitle']+"</h4><p><a target='_blank' href='http://www.douyu.com/"+msg['roomid']+"'>"+msg['anchor']+"@"+msg['tag']+"</a></p></div>"
                  + "</div></div>");
+                var timer = setTimeout(function(){
+                    $('#'+colid).remove();
+                },30000)
                 rcounter+=1;
                 chatlist.push(msg)
             }
