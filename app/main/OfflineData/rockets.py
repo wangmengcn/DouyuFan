@@ -4,9 +4,11 @@
 # @Author  : Wangmengcn (eclipse_sv@163.com)
 # @Link    : https://eclipsesv.com
 # @Version : $0.1$
-# test.py用以测试新增功能
-from getmsg import HotRoom
 
-data = HotRoom()
-if data:
-    print data
+import pymongo
+from pymongo import MongoClient
+
+client = MongoClient()
+db = client['Douyu']
+col = db['rocket']
+

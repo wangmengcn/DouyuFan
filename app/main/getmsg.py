@@ -1,4 +1,9 @@
-#-*- coding:UTF-8-*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2016-07-14 10:20:40
+# @Author  : Wangmengcn (eclipse_sv@163.com)
+# @Link    : https://eclipsesv.com
+# @Version : $0.1$
 # this is for getting message from redis subscribe and send it to socketio
 # server
 from pymongo import MongoClient
