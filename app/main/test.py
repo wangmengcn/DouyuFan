@@ -5,8 +5,8 @@
 # @Link    : https://eclipsesv.com
 # @Version : $0.1$
 # test.py用以测试新增功能
-from getmsg import HotRoom
-
-data = HotRoom()
-if data:
-    print data
+from datetime import datetime
+date = datetime.today()
+print date
+print date.day
+print type(date)
