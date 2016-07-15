@@ -20,19 +20,19 @@ hour = range(0, 24)
 
 
 def sortbyDay():
-	today = datetime.today()
-	year = today.year
-	m = today.month
-	d = today.day
-    singledate = datetime(year, m, d-1)
+    today = datetime.today()
+    year = today.year
+    m = today.month
+    d = today.day
+    singledate = datetime(year, m, d - 1)
     print singledate
     singledata = []
     count = 0
     for h in hour:
         data = []
         value = {}
-        start = datetime(year, m, d, h, 0, 0)
-        end = datetime(year, m, d, h, 59, 59)
+        start = datetime(year, m, d - 1, h, 0, 0)
+        end = datetime(year, m, d - 1, h, 59, 59)
         daydata = col.find(
             {'date': {'$gt': start, '$lt': end}}, {'_id': 0})
         if daydata is not None:

@@ -5,8 +5,9 @@
 # @Link    : https://eclipsesv.com
 # @Version : $0.1$
 # test.py用以测试新增功能
+from getmsg import sortbyDay
 from datetime import datetime
-date = datetime.today()
-print date
-print date.day
-print type(date)
+day = datetime.today()
+value = sortbyDay(day)
+if value:
+	print value
