@@ -11,7 +11,7 @@
 	<div class="container container-fluid">
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="/now">实时</a></li>
+				<li><a href="/">今日数据</a></li>
 				<li><a href="/last">历史</a></li>
 				<li><a href="/chatmsg">火箭频道</a></li>
 			</ul>
@@ -19,11 +19,20 @@
 
 	</div>
 </div>
-<div class="container" style="width:50%;float:left;height:400px" id="piemonitor">
-	<script type="text/javascript" src="../static/scripts/piechart.js"></script>
+<div class="container" style="width:100%;float:left;height:400px" id="piemonitor">
 </div>
-<div class="container" style="width:50%;height:400px;float:right" id="flowmonitor">
-	<script type="text/javascript" src="../static/scripts/flowchart.js"></script>	
-</div>
+<div class="container">
+	<div class="row" id="senderRow">
+		<h2>土豪排行</h2>
+		<div class="col-md-3" id="senderRank"></div>
+		<div class="col-md-9" id="senderPie" style="height:430px"></div>
+	</div>
+	<div class="row" id="recverRow">
+		<h2>主播排行</h2>
+		<div class="col-md-3" id="recverRank"></div>
+		<div class="col-md-9" id="recverPie" style="height:430px"></div>
+	</div>
+</div>	
+<script src="../static/scripts/index.js"></script>
 {%endblock%}
 {%endblock%}

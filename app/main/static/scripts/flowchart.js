@@ -64,6 +64,7 @@ function initChart(){
                 });
             }, 6000);
     });            
+    
 }
 
 flowoption = {

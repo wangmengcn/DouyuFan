@@ -7,9 +7,10 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 from flask_socketio import send, emit
-from getmsg import chatcast, rocketcast, RocketRoom
+from getmsg import chatcast, rocketcast, RocketRoom, valuebyHour
 import time
 import simplejson
+from datetime import datetime
 
 # flask 主程序
 app = Flask(__name__)
@@ -51,8 +52,25 @@ def getmsg(message):
                 gitfroom = RocketRoom(roomid)
                 socketio.emit('rocket cast', gitfroom)
 
+# 经测试，直接讲dict类型发送给前端是无效的，但是转为list之后，前端可以直接接收数据
+
+
+@socketio.on('index')
+def getindex(message):
+    today = datetime.today()
+    (a, b, c, d) = valuebyHour(today)
+    if b is not None:
+        socketio.emit('rocket by day', b)
+    if c is not None:
+        send = sorted(c.iteritems(), key=lambda d: d[1], reverse=True)
+        socketio.emit('sender rank', send)
+    if d is not None:
+        recv = sorted(d.iteritems(), key=lambda d: d[1], reverse=True)
+        socketio.emit('recver rank', recv)
 
 # 在客户端建立建立连接之后，通过触发此方法进行不同的操作，例如向'broad cast'时间发送消息
+
+
 @socketio.on('connect')
 def clientconnected():
     socketio.emit('broad cast', "msg")
@@ -71,6 +89,22 @@ def castinfo(data):
 @socketio.on('rocket cast')
 def castRocket(data):
     emit('rocket cast', data, broadcast=True)
+
+
+# ＝＝＝＝＝＝＝每天按小时火箭分布情况＝＝＝＝＝＝＝ #
+@socketio.on('rocket by day')
+def rocketperhour(data):
+    emit('rocket by day', data, broadcast=True)
+
+
+@socketio.on('sender rank')
+def sendrank(data):
+    emit('sender rank', data, broadcast=True)
+
+
+@socketio.on('recver rank')
+def recvrank(data):
+    emit('recver rank', data, broadcast=True)
 
 
 if __name__ == '__main__':

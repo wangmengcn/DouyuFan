@@ -92,6 +92,8 @@ def sortNames(data, key, rank):
     return sortdata
 
 # 向外提供数据，每日火箭总数、每小时火箭数量、发送者和接收者排名
+
+
 def valuebyHour(date):
     daydata = sortbyDay(date)
     count = 0

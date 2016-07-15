@@ -11,11 +11,5 @@ day = datetime.today()
 (a, b, c, d) = valuebyHour(day)
 print a
 print b
-
-result = sorted(c.iteritems(), key=lambda d: d[1], reverse=True)
-rresult = sorted(d.iteritems(), key=lambda d: d[1], reverse=True)
-
-for item in result:
-    print item[0], ' sends ', item[1], 'gifts!'
-for item in rresult:
-	print item[0],' gets ',item[1],'gifts!'
+print type(c)
+print type(d)
