@@ -18,6 +18,8 @@ db = client["Douyu"]
 roomcol = db["Roominfo"]
 col = db['rocket']
 
+# 当前可以抢鱼丸的房间
+
 
 def RocketRoom(roomid):
     if roomid:
@@ -26,6 +28,8 @@ def RocketRoom(roomid):
             return room
         else:
             return None
+
+# 按照观众人数，前20名房间
 
 
 def HotRoom():
@@ -37,9 +41,11 @@ def HotRoom():
             rooms.append(item)
     return rooms
 
+# 按照输入date，查询当天逐小时鱼丸分布状态
+
 
 def sortbyDay(date):
-    if isinstance(date,datetime):
+    if isinstance(date, datetime):
         year = date.year
         m = date.month
         d = date.day
@@ -73,6 +79,37 @@ def sortbyDay(date):
             return insertdata
         else:
             return None
+
+
+def sortNames(data, key, rank):
+    sortdata = rank
+    for rocket in data:
+        senderkey = rocket[key].encode('utf-8')
+        if senderkey not in sortdata.keys():
+            sortdata[senderkey] = 1
+        else:
+            sortdata[senderkey] += 1
+    return sortdata
+
+# 向外提供数据，每日火箭总数、每小时火箭数量、发送者和接收者排名
+def valuebyHour(date):
+    daydata = sortbyDay(date)
+    count = 0
+    hourvalue = []
+    sendervalue = {}
+    recvervalue = {}
+    if daydata is not None:
+        count = daydata['count']
+        hourdata = daydata['data']
+        for h in hourdata:
+            hourvalue.append(len(h['rockets']))
+            sender = 'sender_id'
+            recver = 'recver_id'
+            rocket = h['rockets']
+            if len(rocket) != 0:
+                sendervalue = sortNames(rocket, sender, sendervalue)
+                recvervalue = sortNames(rocket, recver, recvervalue)
+    return (count, hourvalue, sendervalue, recvervalue)
 
 
 # 用于获取弹幕信息和火箭信息的redis 订阅频道
