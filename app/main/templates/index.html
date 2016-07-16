@@ -1,24 +1,7 @@
 {%extends "base.html"%}
 {%block title%}DouyuFan{%endblock%} 
 {%block content%}
-{%block navbar%}
-<div class="jumbotron" style="background-image:url('../static/1.jpg')">
-	<div class="container">
-		<h1>DouyuFan</h1>
-	</div>
-</div>
-<div class="navbar  navbar-inverse" role="navigation">
-	<div class="container container-fluid">
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="/">今日数据</a></li>
-				<li><a href="/last">历史</a></li>
-				<li><a href="/chatmsg">火箭频道</a></li>
-			</ul>
-		</div>
-
-	</div>
-</div>
+{{super()}}
 <div class="container" style="width:100%;float:left;height:400px" id="piemonitor">
 </div>
 <div class="container">
@@ -33,6 +16,5 @@
 		<div class="col-md-9" id="recverPie" style="height:430px"></div>
 	</div>
 </div>	
-<script src="../static/scripts/index.js"></script>
-{%endblock%}
+<script src="https://o3sw4xojp.qnssl.com/Douyufanindex1.js"></script>
 {%endblock%}

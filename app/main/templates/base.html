@@ -3,14 +3,35 @@
 <head>
 	{%block head%}
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
-	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../static/js/bootstrap.js"></script>
-	<script src="../static/js/echarts.min.js"></script>
-	<script src="../static/js/socket.io.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://o3sw4xojp.qnssl.com/Douyufanbootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://o3sw4xojp.qnssl.com/Douyufanhotroom1.css">
+	<script src="https://o3sw4xojp.qnssl.com/Douyufanjquery.min.js"></script>
+	<script src="https://o3sw4xojp.qnssl.com/Douyufanbootstrap.min.js"></script>
+	<script src="https://o3sw4xojp.qnssl.com/Douyufanecharts.min.js"></script>
+	<script src="https://o3sw4xojp.qnssl.com/Douyufansocket.io.min.js"></script>
 	{%endblock%}
 </head>
 <body>
-	{%block content%}{%endblock%}
+	{%block content%}
+	<div class="jumbotron" style="background-image:url('https://o3sw4xojp.qnssl.com/Douyufanheader.webp')">
+		<div class="container">
+			<h1>DouyuFan</h1>
+		</div>
+	</div>
+	{%block navbar%}
+	<div class="navbar  navbar-inverse" role="navigation">
+		<div class="container container-fluid">
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">今日数据</a></li>
+					<li><a href="/last">历史</a></li>
+					<li><a href="/chatmsg">火箭频道</a></li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+	{%endblock%}
+	{%endblock%}
 </body>
 </html>
