@@ -50,50 +50,55 @@ function myDateFunction(id, fromModal) {
 }
 socket.on('historyRockets', function(msg){
 	value = msg;
-	var hours = [];
-	for(var i=0;i<24;i++){
-		hours.push(i);
-	}
-	option = {
-		title: {
-			show: true,
-			text: cuurentdate+'🚀逐时发送量',
-			textAlign: 'middle',
-			x : 'center'
-		},
-		tooltip: {
-		    trigger: 'axis',
-		    axisPointer: {
-		        animation: false
+	if(value!=null){
+		var hours = [];
+		for(var i=0;i<24;i++){
+			hours.push(i);
+		}
+		option = {
+			title: {
+				show: true,
+				text: cuurentdate+'🚀逐时发送量',
+				textAlign: 'middle',
+				x : 'center'
+			},
+			tooltip: {
+			    trigger: 'axis',
+			    axisPointer: {
+			        animation: false
+			    },
+			    formatter: function (params) {
+			        return params[0].name+ "点" + params[0].value + "个🚀";
+			    }
+			},
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: hours
 		    },
-		    formatter: function (params) {
-		        return params[0].name+ "点" + params[0].value + "个🚀";
-		    }
-		},
-	    xAxis: {
-	        type: 'category',
-	        boundaryGap: false,
-	        data: hours
-	    },
-	    yAxis: {
-	        type: 'value'
-	    },
-	    series: [
-	        {
-	            name:'🚀',
-	            type:'line',
-	            smooth:true,
-	            symbol: 'none',
-	            stack: 'a',
-	            areaStyle: {
-	                normal: {}
-	            },
-	            data: value
-	        }
-	    ]
-	};
-	myChart.hideLoading();
-	myChart.setOption(option,true);
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: [
+		        {
+		            name:'🚀',
+		            type:'line',
+		            smooth:true,
+		            symbol: 'none',
+		            stack: 'a',
+		            areaStyle: {
+		                normal: {}
+		            },
+		            data: value
+		        }
+		    ]
+		};
+		myChart.hideLoading();
+		myChart.setOption(option,true);
+	}
+	else{
+		myChart.showLoading({text:'缺少本日数据！'});
+	}
 });
 </script>
 {%endblock%}

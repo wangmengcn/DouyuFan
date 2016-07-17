@@ -89,9 +89,13 @@ def sendDate(date):
         m = timevalue[1]
         d = timevalue[2]
         recordDate = datetime(y,m,d)
-        (a, b, c, d) = valuebyHour(recordDate)
-        if b is not None:
-            socketio.emit('historyRockets', b)
+        returnValue = valuebyHour(recordDate)
+        if returnValue:
+            (a, b, c, d) = returnValue
+            if b is not None:
+                socketio.emit('historyRockets', b)
+        else:
+            socketio.emit('historyRockets',None)
         '''
         (a, b, c, d) = valuebyHour(today)
         if b is not None:
