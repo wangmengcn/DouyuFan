@@ -111,7 +111,9 @@ def valuebyHour(date):
             if len(rocket) != 0:
                 sendervalue = sortNames(rocket, sender, sendervalue)
                 recvervalue = sortNames(rocket, recver, recvervalue)
-    return (count, hourvalue, sendervalue, recvervalue)
+        return (count, hourvalue, sendervalue, recvervalue)
+    else:
+        return None
 
 
 # 用于获取弹幕信息和火箭信息的redis 订阅频道

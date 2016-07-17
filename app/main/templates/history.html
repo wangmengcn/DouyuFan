@@ -1,0 +1,107 @@
+{%extends "base.html"%}
+{%block head%}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="../static/css/zabuto_calendar.min.css">
+<script src="../static/scripts/zabuto_calendar.min.js"></script>
+{%endblock%}
+{%block title%}
+History
+{%endblock%}
+{%block content%}
+{{super()}}
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<h3 style="margin-top:3px">点击获取🚀发送情况</h3>
+			<div id="date-popover" class="popover top">
+			    <div id="date-popover-content" class="popover-content"></div>
+			</div>
+			<div id="calendar"></div>
+		</div>
+		<div class="col-md-8" id="historyRockets" style="height:400px">Loding Data</div>
+	</div>
+</div>
+
+<script type="application/javascript">
+// 连接socket.io服务器
+var socket = io.connect('http://123.206.211.77:' + 3000);
+// 设置echarts
+var rocketbyHour = document.getElementById('historyRockets');
+var myChart = echarts.init(rocketbyHour);
+var cuurentdate;
+var returnData;
+$(document).ready(function () {
+    $("#calendar").zabuto_calendar({language: "en",
+    								cell_border :true,
+    								today : true,
+    								show_days : false,
+    								weekstartson : 0,
+    								action: function () {
+            							return myDateFunction(this.id, false);
+        							}			
+	});
+	myChart.showLoading({text:'点击日历获取数据'});
+});
+function myDateFunction(id, fromModal) {
+    var date = $("#" + id).data("date");
+    cuurentdate = date
+    socket.emit('historyDate',date);
+	myChart.showLoading({text:'数据加载中！'});
+    return true;
+}
+socket.on('historyRockets', function(msg){
+	value = msg;
+	returnData =msg;
+	if(value!=null){
+		var hours = [];
+		for(var i=0;i<24;i++){
+			hours.push(i);
+		}
+		option = {
+			title: {
+				show: true,
+				text: cuurentdate+'🚀逐时发送量',
+				textAlign: 'middle',
+				x : 'center'
+			},
+			tooltip: {
+			    trigger: 'axis',
+			    axisPointer: {
+			        animation: false
+			    },
+			    formatter: function (params) {
+			        return params[0].name+ "点" + params[0].value + "个🚀";
+			    }
+			},
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: hours
+		    },
+		    yAxis: {
+		        type: 'value'
+		    },
+		    series: [
+		        {
+		            name:'🚀',
+		            type:'line',
+		            smooth:true,
+		            symbol: 'none',
+		            stack: 'a',
+		            areaStyle: {
+		                normal: {}
+		            },
+		            data: value
+		        }
+		    ]
+		};
+		myChart.hideLoading();
+		myChart.setOption(option,true);
+	}
+	else{
+		myChart.showLoading({text:'缺少本日数据！'});
+	}
+	
+});
+</script>
+{%endblock%}

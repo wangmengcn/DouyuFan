@@ -76,6 +76,37 @@ def clientconnected():
     socketio.emit('broad cast', "msg")
     print 'connected'
 
+# 获取日历点击之后发回的日期
+
+
+@socketio.on('historyDate')
+def sendDate(date):
+    if date:
+        print date
+        time = date.split('-')
+        timevalue = [int(item) for item in time]
+        y = timevalue[0]
+        m = timevalue[1]
+        d = timevalue[2]
+        recordDate = datetime(y,m,d)
+        returnValue = valuebyHour(recordDate)
+        if returnValue:
+            (a, b, c, d) = returnValue
+            if b is not None:
+                socketio.emit('historyRockets', b)
+        else:
+            socketio.emit('historyRockets',None)
+        '''
+        (a, b, c, d) = valuebyHour(today)
+        if b is not None:
+            socketio.emit('rocket by day', b)
+        if c is not None:
+            send = sorted(c.iteritems(), key=lambda d: d[1], reverse=True)
+            socketio.emit('sender rank', send)
+        if d is not None:
+            recv = sorted(d.iteritems(), key=lambda d: d[1], reverse=True)
+            socketio.emit('recver rank', recv)
+        '''
 # 通过'broad cast'向已经建立简介的客户端广播消息
 
 
@@ -106,6 +137,10 @@ def sendrank(data):
 def recvrank(data):
     emit('recver rank', data, broadcast=True)
 
+
+@socketio.on('historyRockets')
+def sendHistory(data):
+    emit('historyRockets',data)
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=3000)
