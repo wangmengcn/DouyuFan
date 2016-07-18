@@ -13,7 +13,7 @@ from datetime import datetime
 
 
 # 从数据库中获取关于直播间更为详细信息
-client = MongoClient(host="123.206.211.77")
+client = MongoClient(host="123.206.93.122")
 db = client["Douyu"]
 roomcol = db["Roominfo"]
 col = db['rocket']
