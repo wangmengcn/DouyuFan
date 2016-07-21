@@ -39,8 +39,8 @@
          if(rcounter%3==0){
              $('#rockets').append("<div class='row' id="+ rowid +"/>")
          }
-         $('#'+rowid).append("<div class='col-sm-6 col-md-4' id="+colid+ "><div class='thumbnail'><img src='"+ msg['img'] +"'"+ "alt='http://www.douyu.com/"+ msg['roomid'] +"'"+">"+
-             "<div class='caption'><h4>"+msg['roomtitle']+"</h4><p><a target='_blank' href='http://www.douyu.com/"+msg['roomid']+"'>"+msg['anchor']+"@"+msg['tag']+"</a></p></div>"
+         $('#'+rowid).append("<div class='col-sm-6 col-md-4' id="+colid+ "><div class='thumbnail'><img src='"+ msg['img'] +"'"+ "alt='http://localhost:4000/tv/"+ msg['roomid'] +"'"+">"+
+             "<div class='caption'><h4>"+msg['roomtitle']+"</h4><p><a target='_blank' href='http://localhost:4000/tv/"+msg['roomid']+"'>"+msg['anchor']+"@"+msg['tag']+"</a></p></div>"
           + "</div></div>");
          var timer = setTimeout(function(){
              $('#'+colid).remove();
