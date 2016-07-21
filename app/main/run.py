@@ -26,5 +26,11 @@ def chatmsg():
 def history():
     return render_template('history.html')
 
+
+@app.route('/tv/<int:roomid>')
+def tvstream(roomid):
+    if roomid:
+        return render_template('tv.html', roomid=roomid)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=4000)

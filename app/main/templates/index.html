@@ -2,21 +2,22 @@
 {%block title%}DouyuFan{%endblock%} 
 {%block content%}
 {{super()}}
-<div class="container" >
-	<div class="row">
-		<div class="col-md-12" id="piemonitor" style="height:400px">
-	</div>
-</div>
-<div class="container">
-	<div class="row" id="senderRow">
-		<h2>土豪排行</h2>
-		<div class="col-md-3" id="senderRank"></div>
-		<div class="col-md-9" id="senderPie" style="height:430px"></div>
-	</div>
-	<div class="row" id="recverRow">
-		<h2>主播排行</h2>
-		<div class="col-md-3" id="recverRank"></div>
-		<div class="col-md-9" id="recverPie" style="height:430px"></div>
+<div class="container-fluid" style="background-color: rgb(242,242,242) ;">
+	<div class="container" style="width:1140px !important">
+		<div class="row">
+			<div class="col-md-12" id="piemonitor" style="height:400px">
+			</div>
+		</div>
+		<div class="row" id="senderRow" >
+			<h2>土豪排行</h2>
+			<div class="col-md-3" id="senderRank" style="float:left"></div>
+			<div class="col-md-9" id="senderPie" style="height:430px;float:right" style=""></div>
+		</div>
+		<div class="row" id="recverRow">
+			<h2>主播排行</h2>
+			<div class="col-md-3" id="recverRank" style="float:left"></div>
+			<div class="col-md-9" id="recverPie" style="height:430px;float:right"></div>
+		</div>
 	</div>
 </div>	
 <script src="../static/scripts/index1.js"></script>

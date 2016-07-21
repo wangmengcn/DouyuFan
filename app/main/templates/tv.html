@@ -1,0 +1,21 @@
+{%extends "base.html"%}
+{%block head%}
+	{{super()}}
+    <meta http-equiv="Access-Control-Allow-Origin">
+{%endblock%}
+{%block title%}Hottest Room{%endblock%}
+{%block content%}
+{{super()}}
+<div class="container col-md-8 offset2">
+	{%if roomid%}
+		<object type="application/x-shockwave-flash" data="http://staticlive.douyutv.com/common/share/play.swf?room_id={{roomid}}" width="900px" height="552px" allowscriptaccess="always" allowfullscreen="true" allowfullscreeninteractive="true"><param name="quality" value="high"><param name="bgcolor" value="#000000"><param name="allowscriptaccess" value="always"><param name="allowfullscreen" value="true"><param name="wmode" value="transparent"><param name="allowFullScreenInteractive" value="true">
+			<param name="quality" value="high">
+			<param name="bgcolor" value="#000000">
+			<param name="allowscriptaccess" value="always">
+			<param name="allowfullscreen" value="true">
+			<param name="wmode" value="transparent">
+			<param name="allowFullScreenInteractive" value="true">
+		</object>
+	{%endif%}
+</div>
+{%endblock%}
