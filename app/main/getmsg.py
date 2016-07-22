@@ -34,7 +34,7 @@ def RocketRoom(roomid):
 
 def HotRoom():
     hotroom = roomcol.find({}, {"_id": 0, "date": 0}).sort(
-        "audience", pymongo.DESCENDING).limit(20)
+        "audience", pymongo.DESCENDING).limit(21)
     rooms = []
     if hotroom:
         for item in hotroom:

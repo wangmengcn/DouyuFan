@@ -19,13 +19,13 @@
  /*
      此方法主要用以接收服务器的聊天信息
  */
- socket.on('broad cast', function(msg){
-     if (counter%10==0){
-         $('#messages').empty();
-     }
-     $('#messages').append('<li class="list-group-item">'+msg+'</li>');
-     counter+=1;
-   });
+ // socket.on('broad cast', function(msg){
+ //     if (counter%10==0){
+ //         $('#messages').empty();
+ //     }
+ //     $('#messages').append('<li class="list-group-item">'+msg+'</li>');
+ //     counter+=1;
+ //   });
  /*
      此处主要用以接受来自socketio服务器发送的可以抢鱼丸的房间，并通过jQury动态添加相应的元素到页面
  */

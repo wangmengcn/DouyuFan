@@ -6,20 +6,21 @@
 {%block title%}Hottest Room{%endblock%}
 {%block content%}
 {{super()}}
-<div class="container-fluid">
+<div class="container" style="width:1200px !important;background-color: rgba(8, 8, 8, 0.72);margin:auto;">
     <!--在此动态增加最热房间-->
     <div class="container">
-        <h2>热门房间</h2>
+        <h2 style="color:rgba(228, 230, 232, 0.53);">热门房间</h2>
         {%if hotroom%}
             {%for room in hotroom%}
                 {%if flag%3==0 %}
                 <div class="row">
                 {%endif%}
                 <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
+                    <div class="thumbnail" style="border:1px solid rgba(135, 144, 160, 0.15);line-height: 0px;
+    background-color: #0c0c0c;">
                         <img src={{room['img']}} alt="http://localhost:4000/tv/{{room['roomid']}}">
                         <div class="caption">
-                            <h4>{{room['roomtitle']}}</h4>
+                            <h4 style="color:rgba(228, 230, 232, 0.53);">{{room['roomtitle']}}</h4>
                             <p>
                                 <a href="http://localhost:4000/tv/{{room['roomid']}}" target="_blank">
                                     {{room['anchor']}}@{{room['tag']}}
@@ -37,13 +38,13 @@
     </div>
     <div class="container" id="rockets">
     </div>
-    <div class="container">
+    <!-- <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1" id="divchat">
                 <ul class="list-group" id="messages"></ul>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <script type="text/javascript" src="https://o3sw4xojp.qnssl.com/Douyufansocket.io.min.js"></script>
 <script type="text/javascript" src="../static/scripts/gift1.js"></script>

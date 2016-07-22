@@ -13,26 +13,26 @@
 </head>
 <body>
 	{%block content%}
-	<!--div class="jumbotron" style="background-image:url('https://o3sw4xojp.qnssl.com/Douyufanheader.webp')"-->
-	<div class="jumbotron" style="background-image:url('http://cdn.maxjia.com/image/back_new_2.jpg')">
-		<div class="container">
-			<h1>DouyuFan</h1>
+	<div class="container-fluid" style="background-color:rgb(17,17,17)">
+		<!--div class="jumbotron" style="background-image:url('https://o3sw4xojp.qnssl.com/Douyufanheader.webp')"-->
+		<div class="row">
+			<div class="jumbotron" style="background-image:url('../static/title.jpg');height:200px"/>
 		</div>
-	</div>
-	{%block navbar%}
-	<div class="navbar  navbar-inverse" role="navigation">
-		<div class="container container-fluid">
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="/">今日数据</a></li>
-					<li><a href="/history">历史</a></li>
-					<li><a href="/chatmsg">火箭频道</a></li>
-				</ul>
-			</div>
+		<div class="row">
+			<div class="navbar  navbar-inverse" role="navigation" style="margin-bottom:0px;">
+				<div class="container container-fluid">
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="/">今日数据</a></li>
+							<li><a href="/history">历史</a></li>
+							<li><a href="/chatmsg">火箭频道</a></li>
+						</ul>
+					</div>
 
+				</div>
+			</div>
 		</div>
 	</div>
-	{%endblock%}
 	{%endblock%}
 </body>
 </html>
