@@ -81,7 +81,7 @@ var recvers ;
           $('#senderRank').append("<ul class='list-group' id='senders'></ul>");
           piedata = new Array();
           for(item in senders){
-               $('#senders').append("<li class='list-group-item'><span class='badge'>"+senders[item][1]+"</span>"+senders[item][0]+"</li>")
+               // $('#senders').append("<li class='list-group-item'><span class='badge'>"+senders[item][1]+"</span>"+senders[item][0]+"</li>")
                singledata = {'value':senders[item][1],'name':senders[item][0]};
                piedata.push(singledata);
                if(item==9){
@@ -127,7 +127,7 @@ var recvers ;
  socket.on('recver rank',function(msg){
      recvers = msg;
      if(recvers.length!=null){
-          $('#recverRank').append("<ul class='list-group' id='recvers'></ul>");
+          // $('#recverRank').append("<ul class='list-group' id='recvers'></ul>");
           piedata = new Array();
           for(item in recvers){
                $('#recvers').append("<li class='list-group-item'><span class='badge'>"+recvers[item][1]+"</span>"+recvers[item][0]+"</li>");
