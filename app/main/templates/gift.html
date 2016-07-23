@@ -6,18 +6,18 @@
 {%block title%}Hottest Room{%endblock%}
 {%block content%}
 {{super()}}
-<div class="container" style="width:1200px !important;background-color: rgba(8, 8, 8, 0.72);margin:auto;">
+<div class="container nopx" style="width:1200px !important;background-color: rgba(8, 8, 8, 0.72);margin:auto;">
     <!--在此动态增加最热房间-->
-    <div class="container">
+    <div class="container nopx">
         <h2 style="color:rgba(228, 230, 232, 0.53);">热门房间</h2>
         {%if hotroom%}
             {%for room in hotroom%}
                 {%if flag%3==0 %}
-                <div class="row">
+                <div class="row nopx">
                 {%endif%}
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-6 col-md-4 nopx">
                     <div class="thumbnail" style="border:1px solid rgba(135, 144, 160, 0.15);line-height: 0px;
-    background-color: #0c0c0c;">
+    background-color: rgba(8, 8, 8, 0.72);">
                         <img src={{room['img']}} alt="http://eclipsesv.com:4321/tv/{{room['roomid']}}">
                         <div class="caption">
                             <h4 style="color:rgba(228, 230, 232, 0.53);">{{room['roomtitle']}}</h4>
@@ -36,7 +36,7 @@
             {%endfor%}
         {%endif%}
     </div>
-    <div class="container" id="rockets">
+    <div class="container nopx" id="rockets">
     </div>
 </div>
 <script type="text/javascript" src="https://o3sw4xojp.qnssl.com/Douyufansocket.io.min.js"></script>
