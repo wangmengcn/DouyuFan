@@ -7,8 +7,9 @@ I will merger my [Flask project](https://github.com/wangmengcn/LearningFlask) an
 2. use Flask to build my ServerEnd and insert [Bootstrap](http://getbootstrap.com/) and [Echart](http://echarts.baidu.com/index.html) into my html template. 
 3. get and send messages between front and server end through flask-websocket.
 4. complete three pages : today's data、history data and rockets room.
+5. get video stream from douyu.com.
+6. fixed bugs in message collector.
 
 ## TODO
-1. fix some bugs in message collector.
-2. build relationship chart between rocket senders and recvers.
-3. get video stream from douyu.com.
+1. build relationship chart between rocket senders and recvers.
+2. collect more information about anchors and games.
