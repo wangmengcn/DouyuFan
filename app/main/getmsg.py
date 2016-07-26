@@ -13,10 +13,20 @@ from datetime import datetime
 
 
 # 从数据库中获取关于直播间更为详细信息
-client = MongoClient(host="123.206.93.122")
+client = MongoClient()
 db = client["Douyu"]
 roomcol = db["Roominfo"]
 col = db['rocket']
+
+
+# 通过用户名获取用户完整信息
+def GetUserinfo(usrname):
+    usrcol = client['flask']['users']
+    userinfo = usrcol.find_one({"username": usrname}, {"_id": 0})
+    if userinfo:
+        return userinfo
+    else:
+        return None
 
 # 当前可以抢鱼丸的房间
 
@@ -117,10 +127,10 @@ def valuebyHour(date):
 
 
 # 用于获取弹幕信息和火箭信息的redis 订阅频道
-redis = redis.StrictRedis(host='123.206.211.77',
-                          port='6379', db=0, password='abc@123')
-chatcast = redis.pubsub()
-chatcast.subscribe('chatinfo')
+# redis = redis.StrictRedis(host='123.206.211.77',
+#                           port='6379', db=0, password='abc@123')
+# chatcast = redis.pubsub()
+# chatcast.subscribe('chatinfo')
 
-rocketcast = redis.pubsub()
-rocketcast.subscribe('rocketinfo')
+# rocketcast = redis.pubsub()
+# rocketcast.subscribe('rocketinfo')
