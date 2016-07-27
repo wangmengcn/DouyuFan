@@ -10,6 +10,8 @@ import re
 import requests
 from datetime import datetime
 from pymongo import MongoClient
+from bson.son import SON
+from bson.objectid import ObjectId
 
 HOST = "http://www.douyu.com"
 Directory_url = "http://www.douyu.com/directory?isAjax=1"
@@ -29,7 +31,7 @@ headers = {
     'Upgrade-InsecureRequests': UpgradeInsecureRequests
 }
 
-cli = MongoClient(host="123.206.211.77")
+cli = MongoClient()
 db = cli["Douyu"]
 col = db["Roominfo"]
 
@@ -79,6 +81,26 @@ def get_roominfo(data):
                     pass
 
 
+def aggregateData():
+    '''
+    通过mongodb自带的aggregation()将关于主播和分类的数据装载到两个不同的表中，以供后用
+    '''
+    sortbyKind = [{"$project": {'audience': 1, 'tag': 1, 'date': 1}}, {
+        "$group": {"_id": '$tag', "sum": {"$sum": '$audience'}}}]
+    sortbyAnchor = [{"$project": {'date': 1, 'audience': 1, 'roomid': 1,
+                                  'anchor': 1, 'tag': 1, '_id': 0}}, {"$out": 'anchorRecord'}]
+    col.aggregate(sortbyAnchor)
+    tagsinfo = col.aggregate(sortbyKind)
+    kindRecord = db['kindRecord']
+    for item in tagsinfo:
+        kindinfo = {
+            "date": datetime.now(),
+            "audience": item['sum'],
+            "tag": item['_id']
+        }
+        kindRecord.insert_one(kindinfo)
+
+
 def insert_info():
     session = requests.session()
     pagecontent = session.get(Directory_url).text
@@ -105,6 +127,6 @@ def insert_info():
             get_roominfo(gamedata)
             pagecount = pagecount + 1
             print pagecount
-
+    aggregateData()
 
 insert_info()
