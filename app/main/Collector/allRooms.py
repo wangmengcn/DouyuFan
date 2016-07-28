@@ -29,7 +29,7 @@ headers = {
     'Upgrade-InsecureRequests': UpgradeInsecureRequests
 }
 
-cli = MongoClient(host='123.206.211.77')
+cli = MongoClient()
 db = cli["Douyu"]
 col = db["Roominfo"]
 

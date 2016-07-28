@@ -6,7 +6,7 @@
 */
 
 // 连接socket.io服务器
-var socket = io.connect('http://123.206.211.77:' + 3000);
+var socket = io.connect('http://localhost:' + 3000);
 // 绘制逐时🚀数据
 var dom = document.getElementById("piemonitor");
 var senderdom = document.getElementById("senderPie");
