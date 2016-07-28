@@ -82,13 +82,16 @@ def get_roominfo(data):
 def aggregateData():
     '''
     通过mongodb自带的aggregation()将关于主播和分类的数据装载到两个不同的表中，以供后用
+    要注意的是：使用$out操作符会覆盖原有collection！
     '''
     sortbyKind = [{"$project": {'audience': 1, 'tag': 1, 'date': 1}}, {
         "$group": {"_id": '$tag', "sum": {"$sum": '$audience'}}}]
+
     sortbyAnchor = [{"$project": {'date': 1, 'audience': 1, 'roomid': 1,
-                                  'anchor': 1, 'tag': 1, '_id': 0}}, {"$out": 'anchorRecord'}]
-    col.aggregate(sortbyAnchor)
+                                  'anchor': 1, 'tag': 1, '_id': 0}}]
+    anchors = col.aggregate(sortbyAnchor)
     tagsinfo = col.aggregate(sortbyKind)
+    anchorinfo = db['anchorRecord']
     kindRecord = db['kindRecord']
     for item in tagsinfo:
         kindinfo = {
@@ -97,6 +100,15 @@ def aggregateData():
             "tag": item['_id']
         }
         kindRecord.insert_one(kindinfo)
+    for item in anchors:
+        anchordata = {
+            "date": datetime.now(),
+            "audience": item['audience'],
+            "roomid": item['roomid'],
+            "anchor": item['anchor'],
+            "tag": item['tag']
+        }
+        anchorinfo.insert_one(anchordata)
 
 
 def insert_info():
