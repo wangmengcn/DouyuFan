@@ -10,6 +10,8 @@ import re
 import requests
 from datetime import datetime
 from pymongo import MongoClient
+from bson.son import SON
+from bson.objectid import ObjectId
 
 HOST = "http://www.douyu.com"
 Directory_url = "http://www.douyu.com/directory?isAjax=1"
