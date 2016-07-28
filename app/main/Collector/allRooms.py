@@ -10,6 +10,8 @@ import re
 import requests
 from datetime import datetime
 from pymongo import MongoClient
+from bson.son import SON
+from bson.objectid import ObjectId
 
 HOST = "http://www.douyu.com"
 Directory_url = "http://www.douyu.com/directory?isAjax=1"
@@ -29,7 +31,11 @@ headers = {
     'Upgrade-InsecureRequests': UpgradeInsecureRequests
 }
 
+<<<<<<< HEAD
 cli = MongoClient(host='123.206.211.77')
+=======
+cli = MongoClient()
+>>>>>>> e4a031820467b425cc13af49aeb167d370559f9d
 db = cli["Douyu"]
 col = db["Roominfo"]
 
