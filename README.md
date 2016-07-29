@@ -13,3 +13,7 @@ I will merger my [Flask project](https://github.com/wangmengcn/LearningFlask) an
 ## TODO
 1. build relationship chart between rocket senders and recvers.
 2. collect more information about anchors and games.
+3. restful api for data acquiring
+4. functional and unit test.
+5. requirement.txt for dependence of this project.
+6. config file for database and other things.
