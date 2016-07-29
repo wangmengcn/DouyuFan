@@ -97,17 +97,6 @@ def sendDate(date):
                 socketio.emit('historyRockets', b)
         else:
             socketio.emit('historyRockets', None)
-        '''
-        (a, b, c, d) = valuebyHour(today)
-        if b is not None:
-            socketio.emit('rocket by day', b)
-        if c is not None:
-            send = sorted(c.iteritems(), key=lambda d: d[1], reverse=True)
-            socketio.emit('sender rank', send)
-        if d is not None:
-            recv = sorted(d.iteritems(), key=lambda d: d[1], reverse=True)
-            socketio.emit('recver rank', recv)
-        '''
 # 通过'broad cast'向已经建立简介的客户端广播消息
 
 
