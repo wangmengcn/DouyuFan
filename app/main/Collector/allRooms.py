@@ -10,6 +10,7 @@ import re
 import requests
 from datetime import datetime
 from pymongo import MongoClient
+import time
 
 
 HOST = "http://www.douyu.com"
@@ -30,7 +31,7 @@ headers = {
     'Upgrade-InsecureRequests': UpgradeInsecureRequests
 }
 
-cli = MongoClient(host='123.206.211.77')
+cli = MongoClient()
 db = cli["Douyu"]
 col = db["Roominfo"]
 
@@ -39,45 +40,52 @@ def get_roominfo(data):
     if data:
         firstpage = BeautifulSoup(data)
         roomlist = firstpage.select('li')
-        print len(roomlist)
         if roomlist:
             for room in roomlist:
                 try:
                     roomid = room["data-rid"]
-                    roomtitle = room.a["title"]
-                    roomtitle = roomtitle.encode('utf-8')
-                    roomowner = room.select("p > span")
-                    roomtag = room.select("div > span")
-                    roomimg = room.a
-                    roomtag = roomtag[0].string
-                    date = datetime.now()
-                    # now = datetime.datetime(
-                    # date.year, date.month, date.day, date.hour, date.minute)
-                    if len(roomowner) == 2:
-                        zbname = roomowner[0].string
-                        audience = roomowner[1].get_text()
-                        audience = audience.encode('utf-8').decode('utf-8')
-                        image = roomimg.span.img["data-original"]
-                        word = u"万"
-                        if word in audience:
-                            r = re.compile(r'(\d+)(\.?)(\d*)')
-                            data = r.match(audience).group(0)
-                            audience = int(float(data) * 10000)
-                        else:
-                            audience = int(audience)
-                        roominfo = {
-                            "roomid": int(roomid),
-                            "roomtitle": roomtitle,
-                            "anchor": zbname,
-                            "audience": audience,
-                            "tag": roomtag,
-                            "date": date,
-                            "img": image
-                        }
-                        col.insert_one(roominfo)
+                    print roomid
+                    if col.find({'roomid': int(roomid)}).count() != 0:
+                        return False
+                    else:
+                        roomtitle = room.a["title"]
+                        roomtitle = roomtitle.encode('utf-8')
+                        roomowner = room.select("p > span")
+                        roomtag = room.select("div > span")
+                        roomimg = room.a
+                        roomtag = roomtag[0].string
+                        date = datetime.now()
+                        if len(roomowner) == 2:
+                            zbname = roomowner[0].string
+                            audience = roomowner[1].get_text()
+                            audience = audience.encode('utf-8').decode('utf-8')
+                            image = roomimg.span.img["data-original"]
+                            word = u"万"
+                            if word in audience:
+                                r = re.compile(r'(\d+)(\.?)(\d*)')
+                                data = r.match(audience).group(0)
+                                audience = int(float(data) * 10000)
+                            else:
+                                audience = int(audience)
+                            roominfo = {
+                                "roomid": int(roomid),
+                                "roomtitle": roomtitle,
+                                "anchor": zbname,
+                                "audience": audience,
+                                "tag": roomtag,
+                                "date": date,
+                                "img": image
+                            }
+                            col.insert_one(roominfo)
                     # print roomid,":",roomtitle
-                except Exception, e:
-                    pass
+                except Exception:
+                    return False
+            time.sleep(1)
+            return True
+        else:
+            return False
+    else:
+        return False
 
 
 def aggregateData():
@@ -113,6 +121,9 @@ def aggregateData():
 
 
 def insert_info():
+    '''
+    通过遍历游戏分类页面获取所有直播间
+    '''
     session = requests.session()
     pagecontent = session.get(Directory_url).text
     pagesoup = BeautifulSoup(pagecontent)
@@ -121,21 +132,13 @@ def insert_info():
     for game in games:
         links = game["href"]
         pagecount = 1
-        initdata = None
-        originURL = HOST + links + "/?page=1&isAjax=1"
-        while True:
+        flag = True
+        while flag:
             Qurystr = "/?page=" + str(pagecount) + "&isAjax=1"
             gameurl = HOST + links + Qurystr
+            gamedata = session.get(gameurl).text
             print gameurl
-            if pagecount == 1:
-                gamedata = session.get(gameurl).text
-                initdata = gamedata
-            else:
-                gamedata = session.get(gameurl).text
-                origindata = session.get(originURL).text
-                if initdata == origindata:
-                    break
-            get_roominfo(gamedata)
+            flag = get_roominfo(gamedata)
             pagecount = pagecount + 1
             print pagecount
     aggregateData()

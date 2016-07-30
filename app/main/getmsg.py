@@ -13,7 +13,7 @@ from datetime import datetime
 
 
 # 从数据库中获取关于直播间更为详细信息
-client = MongoClient(host='123.206.211.77')
+client = MongoClient()
 db = client["Douyu"]
 roomcol = db["Roominfo"]
 col = db['rocket']
@@ -27,6 +27,83 @@ def GetUserinfo(usrname):
         return userinfo
     else:
         return None
+
+# 获取所有直播分类
+
+
+def getAllTags():
+    '''
+    返回所有直播分类
+    '''
+    tagcol = db['kindRecord']
+    tags = tagcol.distinct('tag')
+    if tags:
+        return tags
+    else:
+        return None
+
+
+def getOnline():
+    '''
+    获取当前所有类别的在线情况
+    '''
+    onlineCol = db['Roominfo']
+    sortbyKind = [{"$project": {'audience': 1, 'tag': 1, 'date': 1}}, {
+        "$group": {"_id": '$tag', "sum": {"$sum": '$audience'}}}]
+    onlineinfo = onlineCol.aggregate(sortbyKind)
+    result = [{'tag': item['_id'], 'online':item['sum']}
+              for item in onlineinfo]
+    return result if result else None
+
+
+def getTaginfo(tag):
+    '''
+    获取指定类别直播人数和该分类下所有主播
+    '''
+    if tag:
+        taginfo = db['kindRecord']
+        result = taginfo.find({'tag': tag}, {'_id': 0, 'date': 0}).sort(
+            'date', pymongo.DESCENDING).limit(1)
+        taganchor = db['Roominfo']
+        anchors = taganchor.find(
+            {'tag': tag}, {'_id': 0, 'img': 0, 'date': 0, 'tag': 0})
+        if anchors.count() != 0:
+            anchorsinfo = [{'anchor': item['anchor'], 'audience':item['audience'], 'roomid':item[
+                'roomid'], 'roomtitle':item['roomtitle']} for item in anchors]
+            if result.count() != 0:
+                return result[0], anchorsinfo
+            else:
+                return None
+        else:
+            return None
+
+
+def getAnchors():
+    '''
+    获取所有主播
+    '''
+    anchors = db['Roominfo']
+    anchordata = anchors.find({}, {'_id': 0, 'img': 0, 'date': 0}).sort('audience',pymongo.DESCENDING)
+    if anchordata.count() != 0:
+        anchorsinfo = [{'anchor': item['anchor'], 'audience':item['audience'], 'roomid':item[
+            'roomid'], 'roomtitle':item['roomtitle'], 'tag':item['tag']} for item in anchordata]
+        return anchorsinfo
+    else:
+        return None
+
+
+def getAnchorinfo(anchor):
+    '''
+    获取指定主播的人气随时间变化情况
+    '''
+    if anchor:
+        anchorcol = db['anchorRecord']
+        anchorinfo = anchorcol.find({'anchor':anchor}).sort('date',pymongo.ASCENDING)
+        if anchorinfo.count() != 0:
+            result = [{'anchor': item['anchor'], 'audience':item['audience'], 'tag':item['tag'],'date':str(item['date'])} for item in anchorinfo]
+            return result
+        else:
+            return None
 
 # 当前可以抢鱼丸的房间
 
@@ -127,8 +204,7 @@ def valuebyHour(date):
 
 
 # 用于获取弹幕信息和火箭信息的redis 订阅频道
-redis = redis.StrictRedis(host='123.206.211.77',
-                          port='6379', db=0, password='abc@123')
+redis = redis.StrictRedis()
 chatcast = redis.pubsub()
 chatcast.subscribe('chatinfo')
 

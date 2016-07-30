@@ -57,16 +57,17 @@ def getmsg(message):
 
 @socketio.on('index')
 def getindex(message):
-    today = datetime.today()
-    (a, b, c, d) = valuebyHour(today)
-    if b is not None:
-        socketio.emit('rocket by day', b)
-    if c is not None:
-        send = sorted(c.iteritems(), key=lambda d: d[1], reverse=True)
-        socketio.emit('sender rank', send)
-    if d is not None:
-        recv = sorted(d.iteritems(), key=lambda d: d[1], reverse=True)
-        socketio.emit('recver rank', recv)
+    today = datetime(2016, 7, 27)
+    if valuebyHour(today) is not None:
+        (a, b, c, d) = valuebyHour(today)
+        if b is not None:
+            socketio.emit('rocket by day', b)
+        if c is not None:
+            send = sorted(c.iteritems(), key=lambda d: d[1], reverse=True)
+            socketio.emit('sender rank', send)
+        if d is not None:
+            recv = sorted(d.iteritems(), key=lambda d: d[1], reverse=True)
+            socketio.emit('recver rank', recv)
 
 # 在客户端建立建立连接之后，通过触发此方法进行不同的操作，例如向'broad cast'时间发送消息
 
@@ -88,25 +89,14 @@ def sendDate(date):
         y = timevalue[0]
         m = timevalue[1]
         d = timevalue[2]
-        recordDate = datetime(y,m,d)
+        recordDate = datetime(y, m, d)
         returnValue = valuebyHour(recordDate)
         if returnValue:
             (a, b, c, d) = returnValue
             if b is not None:
                 socketio.emit('historyRockets', b)
         else:
-            socketio.emit('historyRockets',None)
-        '''
-        (a, b, c, d) = valuebyHour(today)
-        if b is not None:
-            socketio.emit('rocket by day', b)
-        if c is not None:
-            send = sorted(c.iteritems(), key=lambda d: d[1], reverse=True)
-            socketio.emit('sender rank', send)
-        if d is not None:
-            recv = sorted(d.iteritems(), key=lambda d: d[1], reverse=True)
-            socketio.emit('recver rank', recv)
-        '''
+            socketio.emit('historyRockets', None)
 # 通过'broad cast'向已经建立简介的客户端广播消息
 
 
@@ -140,7 +130,7 @@ def recvrank(data):
 
 @socketio.on('historyRockets')
 def sendHistory(data):
-    emit('historyRockets',data)
+    emit('historyRockets', data)
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=3000)

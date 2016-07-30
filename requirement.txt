@@ -1,0 +1,15 @@
+beautifulsoup4==4.4.1
+eventlet==0.19.0
+Flask==0.10.1
+gevent==1.1.1
+gevent-websocket==0.9.5
+greenlet==0.4.10
+html5lib==0.9999999
+Jinja2==2.7.1
+lxml==3.6.0
+pymongo==3.2.2
+python-socketio==1.4.1
+redis==2.10.5
+requests==2.9.1
+simplejson==3.8.2
+Werkzeug==0.10.4

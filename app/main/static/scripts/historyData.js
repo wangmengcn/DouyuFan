@@ -6,7 +6,7 @@
  */
 
  // 连接socket.io服务器
- var socket = io.connect('http://123.206.211.77:' + 3000);
+ var socket = io.connect('http://localhost:' + 3000);
  // 设置echarts
  var rocketbyHour = document.getElementById('historyRockets');
  var myChart = echarts.init(rocketbyHour);

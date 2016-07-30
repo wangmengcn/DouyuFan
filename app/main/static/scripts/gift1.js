@@ -4,7 +4,7 @@
  * @date    2016-07-16 09:18:54
  * @version $Id$
  */
- var socket = io.connect('http://123.206.211.77:' + 3000);
+ var socket = io.connect('http://localhost:' + 3000);
  var counter = 1;
  var rcounter = 0;
  var rocketrow = 0;

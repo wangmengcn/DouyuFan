@@ -18,11 +18,11 @@
                 <div class="col-sm-6 col-md-4 nopx">
                     <div class="thumbnail" style="border:1px solid rgba(135, 144, 160, 0.15);line-height: 0px;
     background-color: rgba(8, 8, 8, 0.72);">
-                        <img src={{room['img']}} alt="http://eclipsesv.com:4321/tv/{{room['roomid']}}">
+                        <img src={{room['img']}} alt="http://localhost:4000/tv/{{room['roomid']}}">
                         <div class="caption">
                             <h4 style="color:rgba(228, 230, 232, 0.53);">{{room['roomtitle']}}</h4>
                             <p>
-                                <a href="http://eclipsesv.com:4321/tv/{{room['roomid']}}" target="_blank">
+                                <a href="http://localhost:4000/tv/{{room['roomid']}}" target="_blank">
                                     {{room['anchor']}}@{{room['tag']}}
                                 </a>
                             </p>
@@ -39,6 +39,5 @@
     <div class="container nopx" id="rockets">
     </div>
 </div>
-<script type="text/javascript" src="https://o3sw4xojp.qnssl.com/Douyufansocket.io.min.js"></script>
-<script type="text/javascript" src="https://o3sw4xojp.qnssl.com/Douyufangift1.js"></script>
+<script type="text/javascript" src="../static/scripts/gift1.js"></script>
 {%endblock%}

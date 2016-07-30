@@ -5,6 +5,3 @@
 # @Link    : https://eclipsesv.com
 # @Version : $0.1$
 # test.py用以测试新增功能
-from Collector import allRooms
-
-result = allRooms.aggregateData()
