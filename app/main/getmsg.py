@@ -204,7 +204,7 @@ def valuebyHour(date):
 
 
 # 用于获取弹幕信息和火箭信息的redis 订阅频道
-redis = redis.StrictRedis()
+redis = redis.StrictRedis(password='abc@123')
 chatcast = redis.pubsub()
 chatcast.subscribe('chatinfo')
 

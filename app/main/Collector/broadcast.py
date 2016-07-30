@@ -11,12 +11,19 @@ redis = redis.StrictRedis(password='abc@123')
 
 
 def castChat(data):
-    if data:
-        redis.publish('chatinfo', data)
+    try:
+        if data:
+            redis.publish('chatinfo', data)
+    except Exception, e:
+        raise e
+
 
 # 将获取到的火箭信息通过redis publish出去
 
 
 def castRocket(data):
-    if data:
-        redis.publish('rocketinfo', data)
+    try:
+        if data:
+            redis.publish('rocketinfo', data)
+    except Exception, e:
+        raise e
