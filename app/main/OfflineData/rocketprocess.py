@@ -9,7 +9,7 @@
 from pymongo import MongoClient
 from datetime import datetime
 
-client = MongoClient(host='123.206.211.77', port=27017)
+client = MongoClient()
 db = client['Douyu']
 col = db['rocket']
 byday = db['rocketbyDay']

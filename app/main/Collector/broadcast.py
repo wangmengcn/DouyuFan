@@ -5,8 +5,7 @@
 # @Link    : https://eclipsesv.com
 # @Version : $0.1$
 import redis
-redis = redis.StrictRedis(host='123.206.211.77',
-                          port='6379', db=0, password='abc@123')
+redis = redis.StrictRedis(password='abc@123')
 
 # 将获取到的弹幕信息通过redis publish出去
 

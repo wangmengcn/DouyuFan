@@ -52,7 +52,7 @@ def get_rocket(data):
         rocketmsg["gift"] = gift
         rocketmsg["date"] = datetime.now()
         col.insert_one(rocketmsg, bypass_document_validation=False)
-        if gift == "火箭":
+        if gift == u"火箭":
             publishvalue = {}
             publishvalue["sender_id"] = sender_id
             publishvalue["recver_id"] = recver_id
@@ -121,15 +121,19 @@ def create_Conn():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((HOST, PORT))
     RID = get_Hotroom()
-    print "当前最热房间:", RID
-    LOGIN_INFO = "type@=loginreq/username@=qq_aPSMdfM5" + \
-        "/password@=1234567890123456/roomid@=" + str(RID) + "/"
-    print LOGIN_INFO
-    JION_GROUP = "type@=joingroup/rid@=" + str(RID) + "/gid@=-9999" + "/"
-    print JION_GROUP
-    s.sendall(tranMsg(LOGIN_INFO))
-    s.sendall(tranMsg(JION_GROUP))
-    return s
+    if RID:
+        print "当前最热房间:", RID
+        LOGIN_INFO = "type@=loginreq/username@=qq_aPSMdfM5" + \
+            "/password@=1234567890123456/roomid@=" + str(RID) + "/"
+        print LOGIN_INFO
+        JION_GROUP = "type@=joingroup/rid@=" + str(RID) + "/gid@=-9999" + "/"
+        print JION_GROUP
+        s.sendall(tranMsg(LOGIN_INFO))
+        s.sendall(tranMsg(JION_GROUP))
+        return s
+    else:
+        time.sleep(300)
+        create_Conn()
 
 
 def false_Conn():
@@ -151,12 +155,11 @@ def false_Conn():
 
 
 def get_Hotroom():
-    hotroom = roomcol.find().limit(1).sort(
-        [("audience", pymongo.DESCENDING), ("date", pymongo.DESCENDING)])
+    hotroom = roomcol.find().sort("audience", pymongo.DESCENDING).limit(1)
     for item in hotroom:
         return item["roomid"]
 
-client = MongoClient(host="123.206.211.77")
+client = MongoClient()
 db = client["Douyu"]
 col = db["rocket"]
 chatcol = db["chatmsg"]
