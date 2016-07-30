@@ -13,6 +13,7 @@ import pymongo
 from datetime import datetime
 from broadcast import castRocket
 from broadcast import castChat
+from getGifts import getGift
 
 
 '''这里要注意几个变量： host port roomid gid '''
@@ -52,15 +53,15 @@ def get_rocket(data):
         rocketmsg["gift"] = gift
         rocketmsg["date"] = datetime.now()
         col.insert_one(rocketmsg, bypass_document_validation=False)
-        if gift == u"火箭":
-            publishvalue = {}
-            publishvalue["sender_id"] = sender_id
-            publishvalue["recver_id"] = recver_id
-            publishvalue["recver_room"] = recver_room
-            publishvalue["gift"] = gift
-            castRocket(publishvalue)
-            print sender_id, "送给房间号为:", recver_room, "的", recver_id, "一个",\
-                gift, "<", datetime.now(), ">"
+        publishvalue = {}
+        publishvalue["sender_id"] = sender_id
+        publishvalue["recver_id"] = recver_id
+        publishvalue["recver_room"] = recver_room
+        publishvalue["gift"] = gift
+        castRocket(publishvalue)
+        print sender_id, "送给房间号为:", recver_room, "的", recver_id, "一个",\
+            gift, "<", datetime.now(), ">"
+        getGift(str(recver_room))
     except Exception, e:
         print "error occur:", repr(data)
     finally:
@@ -159,7 +160,7 @@ def get_Hotroom():
     for item in hotroom:
         return item["roomid"]
 
-client = MongoClient()
+client = MongoClient(host='121.42.219.216')
 db = client["Douyu"]
 col = db["rocket"]
 chatcol = db["chatmsg"]
