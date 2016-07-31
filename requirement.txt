@@ -13,3 +13,4 @@ redis==2.10.5
 requests==2.9.1
 simplejson==3.8.2
 Werkzeug==0.10.4
+selenium==2.53.6
