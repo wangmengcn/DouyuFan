@@ -84,7 +84,6 @@ def get_roominfo(data):
                     # print roomid,":",roomtitle
                 except Exception:
                     return False
-            time.sleep(1)
             return True
         else:
             return False
@@ -138,18 +137,6 @@ def insert_info():
     gamedata = pool.map(g, gameurl)
     ginfo = lambda data: get_roominfo(data)
     pool.map(ginfo, gamedata)
-    # for game in games:
-    #     links = game["href"]
-    #     pagecount = 1
-    #     flag = True
-    #     while flag:
-    #         Qurystr = "/?page=" + str(pagecount) + "&isAjax=1"
-    #         gameurl = HOST + links + Qurystr
-    #         gamedata = session.get(gameurl).text
-    #         print gameurl
-    #         flag = get_roominfo(gamedata)
-    #         pagecount = pagecount + 1
-    #         print pagecount
     aggregateData()
 
 insert_info()
