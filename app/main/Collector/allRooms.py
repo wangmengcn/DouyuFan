@@ -5,12 +5,15 @@
 # @Link    : https://eclipsesv.com
 # @Version : $0.1$
 
-from bs4 import BeautifulSoup
+
 import re
-import requests
 from datetime import datetime
-from pymongo import MongoClient
 import time
+from multiprocessing.dummy import Pool
+import requests
+from bs4 import BeautifulSoup
+from pymongo import MongoClient
+
 
 
 HOST = "http://www.douyu.com"
@@ -34,6 +37,8 @@ headers = {
 cli = MongoClient()
 db = cli["Douyu"]
 col = db["Roominfo"]
+
+pool = Pool()
 
 
 def get_roominfo(data):
@@ -128,19 +133,12 @@ def insert_info():
     pagecontent = session.get(Directory_url).text
     pagesoup = BeautifulSoup(pagecontent)
     games = pagesoup.select('a')
+    gameurl = [HOST + url["href"] + "/?page=1&isAjax=1" for url in games]
     col.drop()
-    for game in games:
-        links = game["href"]
-        pagecount = 1
-        flag = True
-        while flag:
-            Qurystr = "/?page=" + str(pagecount) + "&isAjax=1"
-            gameurl = HOST + links + Qurystr
-            gamedata = session.get(gameurl).text
-            print gameurl
-            flag = get_roominfo(gamedata)
-            pagecount = pagecount + 1
-            print pagecount
+    g = lambda link: session.get(link).text
+    gamedata = pool.map(g, gameurl)
+    ginfo = lambda data: get_roominfo(data)
+    pool.map(ginfo, gamedata)
     aggregateData()
 
 insert_info()

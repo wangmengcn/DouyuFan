@@ -21,7 +21,7 @@ def getGift(roomid):
         print type(indexvideo)
         indexvideo.send_keys('2333333333333')
         print indexvideo
-        time.sleep(7)
+        time.sleep(5)
         sendbut = browser.find_element_by_class_name('b-btn')
         ActionChains(browser).move_to_element(
             indexvideo).click(sendbut).perform()
@@ -34,7 +34,7 @@ def getGift(roomid):
     while True:
         try:
             ActionChains(browser).move_to_element(gift).click(gift).perform()
-            time.sleep(2)
+            time.sleep(1)
             print times
             times += 1
         except Exception, e:
