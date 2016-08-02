@@ -84,7 +84,6 @@ def get_roominfo(data):
                     # print roomid,":",roomtitle
                 except Exception:
                     return False
-            time.sleep(1)
             return True
         else:
             return False
