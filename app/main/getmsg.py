@@ -19,15 +19,6 @@ roomcol = db["Roominfo"]
 col = db['rocket']
 
 
-# 通过用户名获取用户完整信息
-def GetUserinfo(usrname):
-    usrcol = client['flask']['users']
-    userinfo = usrcol.find_one({"username": usrname}, {"_id": 0})
-    if userinfo:
-        return userinfo
-    else:
-        return None
-
 # 获取所有直播分类
 
 

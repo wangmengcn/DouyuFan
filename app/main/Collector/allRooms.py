@@ -8,7 +8,6 @@
 
 import re
 from datetime import datetime
-import time
 from multiprocessing.dummy import Pool
 import requests
 from bs4 import BeautifulSoup

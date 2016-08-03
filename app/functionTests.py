@@ -5,29 +5,40 @@
 # @Link    : https://eclipsesv.com
 # @Version : $Id$chromedriver
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.keys import Keys
-import time
+import unittest
+from pymongo import MongoClient
+import redis
+from main import getmsg
 
 
-fp = webdriver.FirefoxProfile(
-    r'/Users/eclipse/Library/Application Support/Firefox/Profiles/tmsbsjpg.default')
-browser = webdriver.Firefox(fp)
-browser.implicitly_wait(15)  # seconds
-browser.get("http://www.douyu.com/56229")
-indexvideo = browser.find_element_by_class_name('cs-textarea')
-print type(indexvideo)
-indexvideo.send_keys('2333333333333')
-print indexvideo
-time.sleep(7)
-sendbut = browser.find_element_by_class_name('b-btn')
-ActionChains(browser).move_to_element(indexvideo).click(sendbut).perform()
-gift = browser.find_element_by_class_name('peck-cdn')
-while True:
-	ActionChains(browser).move_to_element(gift).click(gift).perform()
-	time.sleep(2)
+class FlaskUnitTest(unittest.TestCase):
+    """A Class built for testing"""
 
+    def setUp(self):
+        self.client = MongoClient()
+        self.db = self.client['Douyu']
+        self.redis = redis.StrictRedis(password='abc@123')
+
+    def tearDown(self):
+        self.client.close()
+
+    def test_mongo_getTags(self):
+        col = self.db['kindRecord']
+        tags = col.distinct('tag')
+        self.assertEqual(tags, getmsg.getAllTags())
+
+    def test_mongo_getOnline(self):
+        col = self.db['Roominfo']
+        sortbyKind = [{"$project": {'audience': 1, 'tag': 1, 'date': 1}}, {
+            "$group": {"_id": '$tag', "sum": {"$sum": '$audience'}}}]
+        onlineinfo = col.aggregate(sortbyKind)
+        result = [{'tag': item['_id'], 'online':item['sum']}
+                  for item in onlineinfo]
+        self.assertEqual(result, getmsg.getOnline())
+
+    def test_mongo_hotroom(self):
+        self.assertEqual(21, len(getmsg.HotRoom()))
+
+
+if __name__ == '__main__':
+    unittest.main()
