@@ -4,13 +4,14 @@
 # @Author  : Wangmengcn (eclipse_sv@163.com)
 # @Link    : https://eclipsesv.com
 # @Version : $0.1$
+import time
+import simplejson
+from datetime import datetime
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 from flask_socketio import send, emit
 from getmsg import chatcast, rocketcast, RocketRoom, valuebyHour
-import time
-import simplejson
-from datetime import datetime
+
 
 # flask 主程序
 app = Flask(__name__)
@@ -26,7 +27,7 @@ def converData(data):
         result = eval(jsondata)
         return result
     else:
-        return None
+        return None　
 
 
 # ＝＝＝＝＝＝＝关于最新弹幕信息的触发和广播＝＝＝＝＝＝＝ #
