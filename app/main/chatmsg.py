@@ -27,8 +27,7 @@ def converData(data):
         result = eval(jsondata)
         return result
     else:
-        return None　
-
+        return None
 
 # ＝＝＝＝＝＝＝关于最新弹幕信息的触发和广播＝＝＝＝＝＝＝ #
 # 客户端触发'chat msg'事件之后，向'broad cast'发送消息，从而触发广播事件
